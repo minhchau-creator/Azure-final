@@ -1,0 +1,423 @@
+<!-- templates/index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <style>
+    body {
+        display : flex;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url(cat.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background: rgb(44, 47, 59); /* Replace with your desired color */
+    background: -webkit-linear-gradient(to right, rgb(40, 59, 34), rgb(54, 60, 70), rgb(32, 32, 43));
+    background: linear-gradient(to right, rgb(73, 47, 47), rgb(50, 55, 65), rgb(27, 34, 83));
+}
+
+
+.sidebar {
+    height: 100vh; /* Make the sidebar cover the full height of the viewport */
+    width: 0; /* Initially set the width to 0 to hide the sidebar */
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #000000; /* Change the background color as needed */
+    overflow-x: hidden;
+    transition: 0.5s; /* Add a smooth transition effect */
+    padding-top: 60px; /* Adjust the top padding to avoid content behind the navbar */
+    color: white; /* Set the text color */
+}
+
+.sidebar a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #ffffff;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidebar a:hover {
+    color: #f1f1f1;
+}
+
+
+
+.menu-button {
+    color: #ffffff;
+    font-size: 30px;
+    cursor: pointer;
+    z-index: 1001; /* Ensure the menu button is above other elements */
+    margin-left: 20px; /* Adjust the margin as needed */
+    margin-top: 10px; /* Add a margin-top to move the button down */
+    border-top-right-radius: 4px;
+}
+
+
+/* Show/hide sidebar animation */
+body.sidebar-active .sidebar {
+    width: 250px;
+}
+
+
+
+    .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    --main-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 70px;
+    border: 4px;
+    border-radius: 20px; 
+    
+}
+
+    input {
+        width: 95%;
+        padding: 10px;
+        margin-bottom: 10px;
+        
+        
+    }
+
+    button {
+        padding: 10px;
+        background-color: #3fca43; 
+        border-radius: 3px;
+        border: none;
+        color: #fff;
+        cursor: pointer;
+        margin : 4px;
+    }
+
+    button:hover {
+        background-color: #000000;
+    }
+
+    .top-buttons {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        z-index: 1000;
+    }
+
+    .color-background-change,
+    .change-color-theme {
+        margin-bottom: 10px;
+    }
+
+    .color-switcher {
+        position: relative;
+        display: inline-block;
+    }
+
+    .color-switcher .theme-button-container {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        padding: 10px;
+        background: #fff;
+        z-index: 1000;
+    }
+
+    .color-switcher.active .theme-button-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .theme-buttons {
+        display: inline-block;
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+        margin: 5px;
+        cursor: pointer;
+        border: 1px solid rgb(84, 84, 84);
+    }
+
+    .theme-buttons[data-color] {
+        background: var(--main-color, #ccc);
+    }
+
+    .container {
+        /* Your other container styles */
+        background-color: var(--main-color, #fff);
+    }
+
+
+        h1 {
+            display: inline-block;
+            vertical-align: middle;
+            font-size: 2em; /* Adjust the font size as needed */
+            
+            
+        }
+
+        .sidebar-text-button {
+            font-size: 18px;
+            padding: 8px 16px;
+            text-decoration: none;
+            color: #ffffff;
+            display: flex;
+            align-items: center; /* Vertically center the text */
+            transition: background-color 0.3s;
+            border: none;
+            background: none;
+            cursor: pointer;
+        }
+
+        .Rate-button{
+            background-color : #97d599;
+        }        
+
+        .Rate-button:hover{
+            background-color : #97d599;
+        }
+</style>
+
+
+<body id="bd">
+    <div class="menu-button" onclick="toggleSidebar()">☰ Menu</div>
+    
+        <div class="sidebar">
+        
+        <!-- các tính năng chưa được add --> 
+            <button class="sidebar-text-button" onclick="handleNewChat()">New chat 🆕</button>
+            <button class="sidebar-text-button" onclick="handleSumUpHistory()">See Sum up history</button>
+            <button class="sidebar-text-button" onclick="handleLearnLanguage()">Learn language</button>
+            <button class="sidebar-text-button" onclick="handleRate()">Rate Answer</button>
+            
+
+            <div class="change-background">
+                <button class="change-background-img" onclick="showFileInput()">Change Background</button>
+                <div id="fileInputContainer" style="display: none;">
+                    <input type="file" id="backgroundImageInput" accept="image/*">
+                    <button onclick="submitBackground()">Submit</button>
+                    <button onclick="eraseBackground()">Erase</button>
+                </div>
+            </div>
+            
+           
+            <div class="change-background">
+                <div class="color-switcher">
+                    <button class="change-color-theme" onclick="showColorPalette()">Change color theme</button>
+                    <div class="theme-button-container">
+                    <div class="theme-buttons" data-color="#caffcb" style="background: #caffcb;"></div>
+                    <div class="theme-buttons" data-color="#ffc7a2" style="background: #ffc7a2;"></div>
+                    <div class="theme-buttons" data-color="#b9f9ff" style="background: #b9f9ff;"></div>
+                    <div class="theme-buttons" data-color="#89d0ff" style="background: #addeff;"></div>
+                    <div class="theme-buttons" data-color="#a5a3ff" style="background: #a5a3ff;"></div>
+                    <div class="theme-buttons" data-color="#e9bfff" style="background: #f3deff;"></div>
+                    <div class="theme-buttons" data-color="#ffa3ea" style="background: #ffe6f9;"></div>
+                    <div class="theme-buttons" data-color="#fffab6" style="background: #fffab6;"></div>
+                    <div class="theme-buttons" data-color="#cdffa4" style="background: #cdffa4;"></div>
+                    <div class="theme-buttons" data-color="#8eb3ff" style="background: #a6c4ff;"></div>
+                    <div class="theme-buttons" data-color="#fff644" style="background: #fff644;"></div>
+                    <div class="theme-buttons" data-color="#ffffff" style="background: #ffffff;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container" style="--main-color: #fff;">
+        <!-- <div class="avatar"><img src="chatgpt-icon.png" alt="Avatar"> </div> -->
+        <h1> 🤖 ChatBot Website</h1>
+        <div id="chat-container"></div>
+        <input type="text" id="user-input" placeholder="Type your message...">
+        <button onclick="sendMessage()">Send</button>
+        <button onclick="copyText()" class="copy-1-BKi" id="copyButton">Copy</button>
+        <button onclick="text_to_speech()" class="text-to-speech-1-BKi" id="textToSpeechButton">Speak</button>
+        <button onclick="startSpeechRecognition()" class="speech-to-text-1-BKi" id="speechToTextButton">Start Speech Recognition</button>
+        <button onclick="sumUp()" class="speech-to-text-1-BKi" id="sumUpButton">Sum Up</button>
+        <button onclick="Rate()" class="Rate-button" id="sumUpButton">Rate Answer</button>
+    </div>
+</body>
+
+    <script>
+        let curren_text = ''
+        function startSpeechRecognition() {
+        var chatContainer = document.getElementById('chat-container');
+
+        var recognition = new webkitSpeechRecognition() || new SpeechRecognition();
+
+        recognition.lang = 'en-US'; // Set the language (adjust as needed)
+        recognition.interimResults = false; // Set to true for interim results
+
+    
+        recognition.start();
+
+        recognition.onresult = function (event) {
+        var result = event.results[0][0].transcript;
+        alert("Speech Recognition Result: " + result);
+
+        var userMessage = document.createElement('p');
+        userMessage.innerHTML = '<strong>You:</strong> ' + result;
+
+        chatContainer.appendChild(userMessage);
+
+        fetch('/get_response', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'user_input=' + encodeURIComponent(result),
+        })
+        .then(response => response.text())
+        .then(data => {
+            console.log(data);
+            curren_text = JSON.parse(data)['response'];
+
+            var botMessage = document.createElement('p');
+            botMessage.innerHTML = '<strong>ChatBot:</strong> ' + data;
+            chatContainer.appendChild(botMessage);
+        });
+    };
+
+    recognition.onerror = function (event) {
+        console.error('Speech recognition error:', event.error);
+        alert('Speech recognition error. Please try again.');
+    };
+}
+
+        function sendMessage() {
+            var userInput = document.getElementById('user-input').value;
+            document.getElementById('user-input').value = '';
+
+            var chatContainer = document.getElementById('chat-container');
+            var userMessage = document.createElement('p');
+            userMessage.innerHTML = '<strong>You:</strong> ' + userInput;
+            chatContainer.appendChild(userMessage);
+
+            fetch('/get_response', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'user_input=' + encodeURIComponent(userInput),
+            })
+            .then(response => response.text())
+            .then(data => {
+                console.log(data);
+                curren_text = JSON.parse(data)['response'];
+                var botMessage = document.createElement('p');
+                botMessage.innerHTML = '<strong>ChatBot:</strong> ' + curren_text.replace(/\n/g, '<br>');
+                chatContainer.appendChild(botMessage);
+            });
+        }
+    function copyText() {
+    var textToCopy = curren_text; 
+
+    var textarea = document.createElement("textarea");
+    textarea.value = textToCopy;
+
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+
+    document.body.removeChild(textarea);
+
+    alert("Text copied to clipboard: " + textToCopy);
+    }
+function text_to_speech() {
+    var message = curren_text;
+    var msg = new SpeechSynthesisUtterance(message)
+    var voices = window.speechSynthesis.getVoices()
+    msg.voice = voices[0]
+    window.speechSynthesis.speak(msg)
+}
+
+function sumUp() {
+    // Gửi yêu cầu tới route mới đã thêm
+    fetch('/get_response_sum_up', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: 'user_input=' + encodeURIComponent(curren_text),
+    })
+    .then(response => response.text())
+    .then(data => {
+        console.log(data);
+        alert("Sum Up : "+data);
+    });
+}
+
+// Added showColorPalette function
+function showColorPalette() {
+            var colorSwitcher = document.querySelector('.color-switcher');
+            colorSwitcher.classList.toggle('active');
+        }
+
+        // Added themeButtons variable and event listeners
+        var themeButtons = document.querySelectorAll('.theme-buttons');
+        themeButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                //var dataColor = button.getAttribute('data-color');
+                document.querySelector('.container').style.setProperty('--main-color', button.getAttribute('data-color'));
+
+                var colorSwitcher = document.querySelector('.color-switcher');
+                colorSwitcher.classList.remove('active');
+            });
+        });
+
+
+function showFileInput() {
+        document.getElementById('fileInputContainer').style.display = 'block';
+    }
+
+    function submitBackground() {
+        var fileInput = document.getElementById('backgroundImageInput');
+        var file = fileInput.files[0];
+
+        if (file) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var imageUrl = e.target.result;
+                changeBackground(imageUrl);
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Hide the file input container after processing
+        document.getElementById('fileInputContainer').style.display = 'none';
+    }
+
+    function eraseBackground() {
+        // Change the background to the default or remove the background
+        changeBackground('default'); // Pass an empty string to remove the background
+        // Hide the file input container after processing
+        document.getElementById('fileInputContainer').style.display = 'none';
+    }
+
+    function changeBackground(imageUrl) {
+    if (imageUrl === 'default') {
+        document.getElementById("bd").style.backgroundImage = "url(cat.png)";
+        document.getElementById("bd").style.background = "rgb(44, 47, 59)";
+        document.getElementById("bd").style.background = "-webkit-linear-gradient(to right, rgb(40, 59, 34), rgb(54, 60, 70), rgb(32, 32, 43))";
+        document.getElementById("bd").style.background = "linear-gradient(to right, rgb(73, 47, 47), rgb(50, 55, 65), rgb(27, 34, 83))";
+    } else {
+        document.getElementById("bd").style.backgroundImage = "url('" + imageUrl + "')";
+    }
+}
+
+function toggleSidebar() {
+    document.body.classList.toggle('sidebar-active');
+}
+
+function closeSidebar() {
+    document.body.classList.remove('sidebar-active');
+}
+    </script>
+</body>
+</html>
